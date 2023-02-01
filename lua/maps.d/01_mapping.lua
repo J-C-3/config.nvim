@@ -49,10 +49,10 @@ map("n", "<leader>sts", "<cmd>split term://" .. vim.o.shell, { desc = "Horizonta
 
 -- Term is set in terminal.lua
 map("t", "<C-p>", "<c-\\><c-n>")
-map("n", "<leader>tt", TF.Toggle, { desc = "Toggle terminal" })
-map("t", "<localleader>tt", TF.Toggle, { desc = "Toggle terminal" })
-map("n", "<M-CR>", TF.NewTerm, { desc = "Create new terminal" })
-map("t", "<M-CR>", TF.NewTerm, { desc = "Create new terminal" })
+map("n", "<leader>tt", TermToggle, { desc = "Toggle terminal" })
+map("t", "<localleader>tt", TermToggle, { desc = "Toggle terminal" })
+map("n", "<M-CR>", TermNew, { desc = "Create new terminal" })
+map("t", "<M-CR>", TermNew, { desc = "Create new terminal" })
 map("t", "<c-q>", TF.DeleteCurrentTerm, { desc = "Create new terminal" })
 map("t", "<M-r>", TF.RenameTerm, { desc = "Create new terminal" })
 map("t", "<M-Tab>", TF.NextTerm, { desc = "Next terminal" })
