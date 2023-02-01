@@ -15,6 +15,8 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("BufWritePre",
     {
         callback = function()
-            vim.lsp.buf.format()
+            if not string.match("scratchpad", vim.api.nvim_buf_get_name(0)) then
+                vim.lsp.buf.format()
+            end
         end
     })
