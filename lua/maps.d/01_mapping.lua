@@ -73,6 +73,7 @@ map("n", "<leader>l", ":wincmd l<cr>", { silent = true })
 
 -- Float
 map("n", "<leader>fw", "<cmd> lua Util.Float()<cr>")
+-- map("n", "<leader>fw", "<cmd> lua fn.Float(vim.defaulttable())<cr>")
 
 -- Telescope
 map("n", "<leader>pf", "<cmd>lua require('telescope.builtin').find_files()<cr>")
