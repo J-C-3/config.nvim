@@ -1,4 +1,5 @@
 plugins.qol = {
+    { 'ray-x/guihua.lua' },
     { "tpope/vim-commentary" },
     { "tpope/vim-fugitive" },
     {
