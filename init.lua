@@ -13,4 +13,5 @@ end
 require("util")
 require("plugins")
 require("config")
+require("func")
 require("maps")
