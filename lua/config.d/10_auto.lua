@@ -22,3 +22,14 @@ vim.api.nvim_create_autocmd("BufWritePre",
             end
         end
     })
+
+-- Show definition & goto definition autocmd
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client.server_capabilities.hoverProvider then
+            vim.keymap.set({ "n", "v" }, "<leader>sd", vim.lsp.buf.hover, { buffer = args.buf })
+            vim.keymap.set({ "n", "v" }, "<leader>gd", vim.lsp.buf.type_definition)
+        end
+    end,
+})
