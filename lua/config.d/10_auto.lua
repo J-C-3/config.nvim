@@ -1,3 +1,4 @@
+local map = vim.keymap.set
 -- Use q to close window for certain filetypes
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {
@@ -22,14 +23,38 @@ vim.api.nvim_create_autocmd("BufWritePre",
             end
         end
     })
+--
+-- Restart LSP post write
+vim.api.nvim_create_autocmd("BufWritePost",
+    {
+        callback = function()
+            vim.cmd(":e")
+        end
+    })
 
 -- Show definition & goto definition autocmd
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client.server_capabilities.hoverProvider then
-            vim.keymap.set({ "n", "v" }, "<leader>sd", vim.lsp.buf.hover, { buffer = args.buf })
-            vim.keymap.set({ "n", "v" }, "<leader>gd", vim.lsp.buf.type_definition)
+            map({ "n", "v" }, "<leader>sd", vim.lsp.buf.hover, { buffer = args.buf })
+            map({ "n", "v" }, "<leader>gd", vim.lsp.buf.definition)
+            map({ "n", "v" }, "<leader>gtd", vim.lsp.buf.type_definition)
         end
     end,
+})
+-- Set toggleterm bindings
+local terminalGroup = vim.api.nvim_create_augroup("terminalGroup", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+    group = terminalGroup,
+    pattern = {
+        "toggleterm",
+    },
+    callback = function()
+        map({ "n", "t" }, "<M-CR>", TermNew, { buffer = true, silent = true, desc = "Create new terminal" })
+        map({ "n", "t" }, "<c-q>", TF.DeleteCurrentTerm, { buffer = true, silent = true, desc = "Create new terminal" })
+        map({ "n", "t" }, "<M-r>", TF.RenameTerm, { buffer = true, silent = true, desc = "Create new terminal" })
+        map({ "n", "t" }, "<M-Tab>", TF.NextTerm, { buffer = true, silent = true, desc = "Next terminal" })
+        map({ "n", "t" }, "<M-S-Tab>", TF.PrevTerm, { buffer = true, silent = true, desc = "Previous terminal" })
+    end
 })
