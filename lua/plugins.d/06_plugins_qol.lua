@@ -1,6 +1,39 @@
 plugins.qol = {
-    { 'ray-x/guihua.lua' },
-    { "tpope/vim-commentary" },
+    { "ray-x/guihua.lua" },
+    {
+        "numToStr/Comment.nvim",
+        config = function()
+            require('Comment').setup({
+                ---LHS of toggle mappings in NORMAL mode
+                toggler = {
+                    ---Line-comment toggle keymap
+                    line = '<leader>cmm',
+                    ---Block-comment toggle keymap
+                    block = '<leader>cbb',
+                },
+                ---LHS of operator-pending mappings in NORMAL and VISUAL mode
+                opleader = {
+                    ---Line-comment keymap
+                    line = '<leader>cm',
+                    ---Block-comment keymap
+                    block = '<leader>cb',
+                },
+                ---LHS of extra mappings
+                extra = {
+                    ---Add comment on the line above
+                    above = '<leader>cO',
+                    ---Add comment on the line below
+                    below = '<leader>co',
+                    ---Add comment at the end of line
+                    eol = '<leader>cA',
+                },
+
+            })
+            local ft = require('Comment.ft')
+            ft.set('arduino', ft.get('cpp'))
+        end,
+    },
+    -- { "tpope/vim-commentary" },
     { "tpope/vim-fugitive" },
     {
         "simrat39/symbols-outline.nvim",
@@ -50,15 +83,15 @@ plugins.qol = {
             disable_in_macro = true,
             ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
             enable_moveright = true,
-            enable_afterquote = true, -- add bracket pairs after quote,
+            enable_afterquote = true,         -- add bracket pairs after quote,
             enable_check_bracket_line = true, --- check bracket in same line,
-            map_bs = true, -- map the <BS> key,
-            map_c_w = false, -- map <c-w> to delete an pair if possible,
+            map_bs = true,                    -- map the <BS> key,
+            map_c_w = false,                  -- map <c-w> to delete an pair if possible,
             check_ts = true,
             ts_config = {
                 lua = { "string" }, -- it will not add a pair on that treesitter node
                 javascript = { "template_string" },
-                java = false, -- don't check treesitter on java
+                java = false,       -- don't check treesitter on java
             },
             function()
                 local cmp_autopairs = require("nvim-autopairs.completion.cmp")

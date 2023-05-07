@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 require("util")
-require("plugins")
 require("config")
+require("plugins")
 require("func")
 require("maps")
