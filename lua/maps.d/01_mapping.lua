@@ -88,10 +88,15 @@ map("n", "<leader>gj", ":diffget //3<cr>", { silent = true })
 map("n", "<leader>gf", ":diffget //2<cr>", { silent = true })
 
 
--- Commentary
-map("n", "<leader>cm", ':Commentary<cr><esc>', { silent = true })
-map("v", "<leader>cm", ':Commentary<cr><esc>', { silent = true })
-
+-- Comment
+map({ 'n', 'x' },
+    '<leader>cmt',
+    '<cmd>set operatorfunc=v:lua.__flip_flop_comment<cr>g@',
+    {
+        silent = true,
+        desc = "toggle the comment state of each line individually"
+    }
+)
 -- refactoring.nvim
 map("v", "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]])
 map("v", "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]])
