@@ -25,7 +25,6 @@ plugins.treesitter = {
                     "gitignore",
                     "go",
                     "graphql",
-                    "help",
                     "html",
                     "htmldjango",
                     "http",

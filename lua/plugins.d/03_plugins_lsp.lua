@@ -9,6 +9,7 @@ plugins.lsp = {
         dependencies = "williamboman/mason.nvim",
         config = {
             ensure_installed = {
+                "arduino_language_server",
                 "bashls",
                 "clangd",
                 "dockerls",
@@ -18,11 +19,11 @@ plugins.lsp = {
                 "jsonnet_ls",
                 "lemminx",
                 "marksman",
-                "sumneko_lua",
+                "lua_ls",
                 "taplo",
                 "tsserver",
             },
-        }
+        },
     },
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -60,7 +61,6 @@ plugins.lsp = {
                 automatic_setup = true, -- Recommended, but optional
             }
             require("null-ls").setup()
-            require("mason-null-ls").setup_handlers({})
         end,
     },
     {

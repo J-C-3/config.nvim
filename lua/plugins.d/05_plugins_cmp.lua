@@ -36,6 +36,12 @@ plugins.cmp = {
             cmp.setup({
                 sources = {
                     {
+                        name = 'luasnip'
+                    },
+                    {
+                        name = "nvim_lsp"
+                    },
+                    {
                         name = "buffer"
                     },
                     {
@@ -51,12 +57,6 @@ plugins.cmp = {
                             convert_case = true,
                             loud = true,
                         }
-                    },
-                    {
-                        name = 'luasnip'
-                    },
-                    {
-                        name = "nvim_lsp"
                     },
                     {
                         name = "path"

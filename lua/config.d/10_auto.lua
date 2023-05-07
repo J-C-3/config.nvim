@@ -44,17 +44,33 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 -- Set toggleterm bindings
-local terminalGroup = vim.api.nvim_create_augroup("terminalGroup", { clear = true })
+-- local terminalGroup = vim.api.nvim_create_augroup("terminalGroup", { clear = true })
+-- vim.api.nvim_create_autocmd("FileType", {
+--     group = terminalGroup,
+--     pattern = {
+--         "toggleterm",
+--     },
+--     callback = function()
+--         map({ "n", "t" }, "<M-CR>", TermNew, { buffer = true, silent = true, desc = "Create new terminal" })
+--         map({ "n", "t" }, "<c-q>", TF.DeleteCurrentTerm, { buffer = true, silent = true, desc = "Create new terminal" })
+--         map({ "n", "t" }, "<M-r>", TF.RenameTerm, { buffer = true, silent = true, desc = "Create new terminal" })
+--         map({ "n", "t" }, "<M-Tab>", TF.NextTerm, { buffer = true, silent = true, desc = "Next terminal" })
+--         map({ "n", "t" }, "<M-S-Tab>", TF.PrevTerm, { buffer = true, silent = true, desc = "Previous terminal" })
+--     end
+-- })
+
+-- Arduino specific settings, probably better in ftplugin maybe?
+local arduino = vim.api.nvim_create_augroup("arduino", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
-    group = terminalGroup,
+    group = arduino,
     pattern = {
-        "toggleterm",
+        "arduino",
     },
     callback = function()
-        map({ "n", "t" }, "<M-CR>", TermNew, { buffer = true, silent = true, desc = "Create new terminal" })
-        map({ "n", "t" }, "<c-q>", TF.DeleteCurrentTerm, { buffer = true, silent = true, desc = "Create new terminal" })
-        map({ "n", "t" }, "<M-r>", TF.RenameTerm, { buffer = true, silent = true, desc = "Create new terminal" })
-        map({ "n", "t" }, "<M-Tab>", TF.NextTerm, { buffer = true, silent = true, desc = "Next terminal" })
-        map({ "n", "t" }, "<M-S-Tab>", TF.PrevTerm, { buffer = true, silent = true, desc = "Previous terminal" })
+        vim.o.cindent = true
+        vim.o.tabstop = 2
+        vim.o.softtabstop = 2
+        vim.o.shiftwidth = 2
+        vim.o.expandtab = 2
     end
 })

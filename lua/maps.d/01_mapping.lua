@@ -49,7 +49,7 @@ map("n", "<leader>sts", "<cmd>split term://" .. vim.o.shell, { desc = "Horizonta
 
 -- Term is set in terminal.lua
 map("t", "<C-p>", "<c-\\><c-n>")
-map({ "n", "t" }, "<leader>tt", TermToggle, { desc = "Toggle terminal" })
+-- map({ "n", "t" }, "<leader>tt", TermToggle, { desc = "Toggle terminal" })
 
 -- Close window(split)
 map("n", "<c-q>", "<cmd>lua require('bufdelete').bufdelete(0, true)<CR>")
