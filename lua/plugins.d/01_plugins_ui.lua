@@ -48,8 +48,7 @@ plugins.ui = {
         }
     },
     {
-        "distek/bufferline.nvim",
-        branch = "tabpage-rename",
+        "akinsho/bufferline.nvim",
         dependencies = {
             "kyazdani42/nvim-web-devicons",
             "famiu/bufdelete.nvim",
@@ -57,14 +56,14 @@ plugins.ui = {
         config = function()
             require("bufferline").setup({
                 options = {
-                    mode = "buffers", -- set to "tabs" to only show tabpages instead
+                    mode = "buffers",                                                     -- set to "tabs" to only show tabpages instead
                     numbers = "none",
-                    close_command = "lua require('bufdelete').bufdelete(0, true)", -- can be a string | function, see "Mouse actions"
-                    right_mouse_command = "", -- can be a string | function, see "Mouse actions"
-                    left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
+                    close_command = "lua require('bufdelete').bufdelete(0, true)",        -- can be a string | function, see "Mouse actions"
+                    right_mouse_command = "",                                             -- can be a string | function, see "Mouse actions"
+                    left_mouse_command = "buffer %d",                                     -- can be a string | function, see "Mouse actions"
                     middle_mouse_command = "lua require('bufdelete').bufdelete(0, true)", -- can be a string | function, see "Mouse actions"
                     indicator = {
-                        icon = "▎", -- this should be omitted if indicator style is not 'icon'
+                        icon = "▎",                                                     -- this should be omitted if indicator style is not 'icon'
                         style = "icon",
                     },
                     buffer_close_icon = "",
@@ -74,7 +73,7 @@ plugins.ui = {
                     right_trunc_marker = "",
                     max_name_length = 18,
                     max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
-                    truncate_names = true, -- whether or not tab names should be truncated
+                    truncate_names = true,  -- whether or not tab names should be truncated
                     tab_size = 18,
                     diagnostics = "nvim_lsp",
                     diagnostics_update_in_insert = false,
@@ -107,14 +106,22 @@ plugins.ui = {
                             padding = 1,
                         },
                     },
-                    color_icons = true, -- whether or not to add the filetype icon highlights
+                    color_icons = true,       -- whether or not to add the filetype icon highlights
                     show_buffer_icons = true, -- disable filetype icons for buffers
                     show_buffer_close_icons = true,
-                    show_buffer_default_icon = true, -- whether or not an unrecognised filetype should show a default icon
+                    get_element_icon = function(element)
+                        -- element consists of {filetype: string, path: string, extension: string, directory: string}
+                        -- This can be used to change how bufferline fetches the icon
+                        -- for an element e.g. a buffer or a tab.
+                        -- e.g.
+                        local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype,
+                            { default = false })
+                        return icon, hl
+                    end,
                     show_close_icon = true,
                     show_tab_indicators = true,
                     show_duplicate_prefix = true, -- whether to show duplicate buffer prefix
-                    persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
+                    persist_buffer_sort = true,   -- whether or not custom sorted buffers should persist
                     -- can also be a table containing 2 custom separators
                     -- [focused and unfocused]. eg: { '|', '|' }
                     separator_style = "thick",
