@@ -22,6 +22,7 @@ plugins.lsp = {
                 "lua_ls",
                 "taplo",
                 "tsserver",
+                "zls",
             },
         },
     },
