@@ -23,14 +23,6 @@ vim.api.nvim_create_autocmd("BufWritePre",
             end
         end
     })
---
--- Restart LSP post write
-vim.api.nvim_create_autocmd("BufWritePost",
-    {
-        callback = function()
-            vim.cmd(":e")
-        end
-    })
 
 -- Show definition & goto definition autocmd
 vim.api.nvim_create_autocmd('LspAttach', {
