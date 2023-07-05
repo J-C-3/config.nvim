@@ -13,12 +13,16 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Run lsp formatter on write
-local autoFormatGroup = vim.api.nvim_create_augroup("autoFormat", { clear = true })
+local autoFormatGroup = vim.api.nvim_create_augroup("AutoFormat", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre",
     {
         group = autoFormatGroup,
         callback = function()
+            filetype = vim.bo[0].filetype
             if not string.match("scratchpad", vim.api.nvim_buf_get_name(0)) then
+                if filetype == "go" then
+                    require('go.format').goimport()
+                end
                 vim.lsp.buf.format()
             end
         end
