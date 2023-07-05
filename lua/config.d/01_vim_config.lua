@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.wo.colorcolumn = 0
+vim.wo.colorcolumn = "0"
 vim.o.autoread = true
 vim.backspace = { "indent", "eol", "start" }
 vim.o.breakindent = true
@@ -40,7 +40,7 @@ vim.o.smartcase = true
 vim.o.softtabstop = 0
 vim.opt.spell = true
 vim.opt.spelllang = { 'en_us' }
-vim.o.startofline = 0
+vim.o.startofline = true
 vim.o.syntax = "on"
 vim.o.tabstop = 4
 vim.o.termguicolors = true
