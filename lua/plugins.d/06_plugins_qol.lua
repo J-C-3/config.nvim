@@ -1,4 +1,15 @@
 plugins.qol = {
+    {
+        "ethanholz/nvim-lastplace",
+        lazy = false,
+        config = function()
+            require("nvim-lastplace").setup({
+                lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+                lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
+                lastplace_open_folds = true,
+            })
+        end
+    },
     { "ray-x/guihua.lua" },
     {
         "numToStr/Comment.nvim",
@@ -64,9 +75,6 @@ plugins.qol = {
                 c = { "h" },
             }
         }
-    },
-    {
-        "distek/nvim-terminal",
     },
     {
         "lukas-reineke/indent-blankline.nvim",
