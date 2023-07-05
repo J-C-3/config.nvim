@@ -10,6 +10,7 @@ plugins.lsp = {
         config = {
             ensure_installed = {
                 "arduino_language_server",
+                "bufls",
                 "bashls",
                 "clangd",
                 "dockerls",
@@ -72,7 +73,14 @@ plugins.lsp = {
         config = function()
             require("mason-lspconfig").setup_handlers {
                 function(server_name)
-                    require("lspconfig")[server_name].setup {}
+                    local lspconfig = require("lspconfig")
+                    if server_name == "clangd" then
+                        lspconfig["clangd"].setup({
+                            filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }
+                        })
+                    else
+                        lspconfig[server_name].setup {}
+                    end
                 end,
             }
         end
