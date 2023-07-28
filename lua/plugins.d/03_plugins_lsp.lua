@@ -50,8 +50,6 @@ plugins.lsp = {
                 ensure_installed = {
                     "clang_format",
                     "codespell",
-                    "gofumpt",
-                    "goimports",
                     "golangci_lint",
                     "jq",
                     "prettier",
@@ -59,8 +57,9 @@ plugins.lsp = {
                     "shellcheck",
                     "shfmt",
                 },
-                automatic_installation = false,
+                automatic_installation = true,
                 automatic_setup = true, -- Recommended, but optional
+                handlers = {}
             }
             require("null-ls").setup()
         end,
