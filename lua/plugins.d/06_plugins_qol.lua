@@ -44,7 +44,6 @@ plugins.qol = {
             ft.set('arduino', ft.get('cpp'))
         end,
     },
-    -- { "tpope/vim-commentary" },
     { "tpope/vim-fugitive" },
     {
         "simrat39/symbols-outline.nvim",
