@@ -28,6 +28,25 @@ vim.api.nvim_create_autocmd("BufWritePre",
         end
     })
 
+-- Run comments post buffer write
+local postWrite = vim.api.nvim_create_augroup("PostWrite", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost",
+    {
+        group = postWrite,
+        callback = function()
+            local job = require("plenary.job")
+            filetype = vim.bo[0].filetype
+            if not string.match("scratchpad", vim.api.nvim_buf_get_name(0)) then
+                if filetype == "go" then
+                    job:new({
+                        command = "go",
+                        args = { "mod", "tidy" },
+                    }):start()
+                end
+            end
+        end
+    })
+
 -- Show definition & goto definition autocmd
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)

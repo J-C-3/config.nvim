@@ -1,5 +1,8 @@
 plugins.qol = {
     {
+        "nvim-lua/plenary.nvim",
+    },
+    {
         "ethanholz/nvim-lastplace",
         lazy = false,
         config = function()
