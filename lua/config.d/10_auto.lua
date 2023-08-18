@@ -22,8 +22,9 @@ vim.api.nvim_create_autocmd("BufWritePre",
             if not string.match("scratchpad", vim.api.nvim_buf_get_name(0)) then
                 if filetype == "go" then
                     require('go.format').goimport()
+                else
+                    vim.lsp.buf.format()
                 end
-                vim.lsp.buf.format()
             end
         end
     })
