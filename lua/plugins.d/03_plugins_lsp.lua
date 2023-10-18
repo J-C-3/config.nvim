@@ -22,6 +22,7 @@ plugins.lsp = {
                 "marksman",
                 "lua_ls",
                 "taplo",
+                "templ",
                 "tsserver",
                 "zls",
             },
