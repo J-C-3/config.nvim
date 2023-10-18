@@ -80,11 +80,9 @@ plugins.qol = {
     },
     {
         "lukas-reineke/indent-blankline.nvim",
-        config = {
-            space_char_blankline = " ",
-            show_current_context = true,
-            show_current_context_start = true,
-        },
+        main = "ibl",
+        opts = {},
+        config = {},
     },
     {
         "windwp/nvim-autopairs",
