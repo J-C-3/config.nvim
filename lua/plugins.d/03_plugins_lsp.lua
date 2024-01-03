@@ -62,7 +62,10 @@ plugins.lsp = {
                 automatic_setup = true, -- Recommended, but optional
                 handlers = {}
             }
-            require("null-ls").setup()
+            local null_ls = require("null-ls")
+            null_ls.setup()
+            -- Disable codespell autoformat
+            null_ls.deregister(null_ls.builtins.formatting.codespell)
         end,
     },
     {
