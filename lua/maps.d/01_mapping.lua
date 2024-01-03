@@ -46,10 +46,13 @@ map("n", "<leader>sv", "<cmd>vsplit<cr>", { desc = "Split Vertical" })
 map("n", "<leader>stv", "<cmd>topleft vsplit term://" .. vim.o.shell .. "<CR>", { desc = "Vertical Term" })
 map("n", "<leader>sts", "<cmd>botright 15split term://" .. vim.o.shell .. "<CR>", { desc = "Horizontal Term" })
 
-
 -- Term is set in terminal.lua
 map("t", "<C-p>", "<c-\\><c-n>")
--- map({ "n", "t" }, "<leader>tt", TermToggle, { desc = "Toggle terminal" })
+
+-- Panel stuff
+map("n", "<leader>pt", ":lua require('panel').toggle()<cr>")
+map("n", "<leader>pn", ":lua require('panel').next()<cr>")
+map("n", "<leader>pp", ":lua require('panel').previous()<cr>")
 
 -- Close window(split)
 map("n", "<c-q>", "<cmd>lua require('bufdelete').bufdelete(0, true)<CR>")
