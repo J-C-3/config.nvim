@@ -45,7 +45,7 @@ plugins.lsp = {
     },
     {
         "jay-babu/mason-null-ls.nvim",
-        dependencies = { "jose-elias-alvarez/null-ls.nvim" },
+        dependencies = { "nvimtools/none-ls.nvim" },
         config = function()
             require("mason-null-ls").setup {
                 ensure_installed = {
@@ -54,7 +54,6 @@ plugins.lsp = {
                     "golangci_lint",
                     "jq",
                     "prettier",
-                    "sh",
                     "shellcheck",
                     "shfmt",
                 },
