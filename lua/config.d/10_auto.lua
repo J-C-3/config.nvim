@@ -38,7 +38,7 @@ vim.api.nvim_create_autocmd("BufWritePost",
             local job = require("plenary.job")
             local filetype = vim.bo[0].filetype
             if not string.match("scratchpad", vim.api.nvim_buf_get_name(0)) then
-                if filetype == "go" then
+                if filetype == "go" or filetype == "templ" then
                     job:new({
                         command = "go",
                         args = { "mod", "tidy" },

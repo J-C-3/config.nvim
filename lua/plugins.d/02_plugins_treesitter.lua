@@ -133,4 +133,8 @@ plugins.treesitter = {
             })
         end
     },
+    {
+        "vrischmann/tree-sitter-templ",
+        config = true,
+    }
 }
