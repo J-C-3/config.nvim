@@ -71,7 +71,7 @@ plugins.lsp = {
             "williamboman/mason.nvim",
         },
         config = function()
-            require("mason-lspconfig").setup_handlers {
+            require("mason-lspconfig").setup_handlers({
                 function(server_name)
                     local lspconfig = require("lspconfig")
                     if server_name == "clangd" then
@@ -79,10 +79,15 @@ plugins.lsp = {
                             filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }
                         })
                     else
-                        lspconfig[server_name].setup {}
+                        lspconfig[server_name].setup({})
                     end
                 end,
-            }
+            })
+            if vim.fn.executable("htmx-lsp") then
+                require("lspconfig").htmx.setup({
+                    filetypes = { "templ", "html", "htmx", "js", "go" }
+                })
+            end
         end
     },
     {
