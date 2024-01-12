@@ -1,5 +1,13 @@
 plugins.qol = {
     {
+
+        "famiu/bufdelete.nvim",
+        config = function()
+            -- bufdelete mapping - currently focused buffer
+            vim.keymap.set("n", "<leader>bd", "<cmd>Bdelete<CR>", { silent = true })
+        end,
+    },
+    {
         "distek/panel.nvim",
         config = function()
             require("panel").setup({
@@ -8,24 +16,18 @@ plugins.qol = {
                     {
                         -- the name of the panel view (will also be shown in the winbar)
                         name = "Terminal",
-
                         -- the filetype to lock to the panel
                         ft = "toggleterm",
-
                         -- The open function should return the buffer ID of whatever we want in the panel
                         open = function()
                             -- open a new terminal in a split (we *want* to create a new window)
                             vim.cmd("split +term")
-
                             -- Grab the buffer's ID
                             local bufid = vim.api.nvim_get_current_buf()
-
                             -- hide the window (closing could delete the buffer, we don't want that)
                             vim.api.nvim_win_hide(vim.api.nvim_get_current_win())
-
                             -- Plugins would do this for you typically
                             vim.bo[bufid].filetype = "toggleterm"
-
                             -- finally return the new buffer ID
                             return bufid
                         end,
@@ -33,7 +35,6 @@ plugins.qol = {
                         -- close is for a specific scenario in which the filetype relies on a specific window
                         -- Trouble is a good example of this
                         close = nil,
-
                         -- Additional window options to apply to the panel when this buffer is focused
                         wo = {
                             winhighlight = "Normal:ToggleTermNormal",
@@ -47,6 +48,10 @@ plugins.qol = {
                     },
                 }
             })
+
+            vim.keymap.set("n", "<leader>pt", ":lua require('panel').toggle()<cr>")
+            vim.keymap.set("n", "<leader>pn", ":lua require('panel').next()<cr>")
+            vim.keymap.set("n", "<leader>pp", ":lua require('panel').previous()<cr>")
         end
     },
     {
@@ -95,9 +100,32 @@ plugins.qol = {
             })
             local ft = require('Comment.ft')
             ft.set('arduino', ft.get('cpp'))
+            vim.keymap.set({ 'n', 'x' },
+                '<leader>cmt',
+                '<cmd>set operatorfunc=v:lua.__flip_flop_comment<cr>g@',
+                {
+                    silent = true,
+                    desc = "toggle the comment state of each line individually"
+                }
+            )
         end,
     },
-    { "tpope/vim-fugitive" },
+    {
+        "tpope/vim-fugitive",
+        config = function()
+            vim.keymap.set("n", "<leader>gs", ":Git | lua Util.Float()<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gw", ":Gwrite<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gc", ":Git commit | lua Util.Float()<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gsh", ":Git push<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gll", ":Git pull<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gb", ":Git blame<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gvd", ":Gvdiff<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gr", ":GRemove<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>o", ":GBrowse<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gj", ":diffget //3<cr>", { silent = true })
+            vim.keymap.set("n", "<leader>gf", ":diffget //2<cr>", { silent = true })
+        end
+    },
     {
         "simrat39/symbols-outline.nvim",
         config = true
@@ -113,8 +141,15 @@ plugins.qol = {
         end
     },
     {
+        -- Better incsearch
         'kevinhwang91/nvim-hlslens',
-        config = true,
+        config = function()
+            require("hlslens").setup()
+            vim.keymap.set("n", "n",
+                "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>")
+            vim.keymap.set("n", "N",
+                "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>")
+        end,
     },
     {
         "norcalli/nvim-colorizer.lua",
@@ -163,22 +198,33 @@ plugins.qol = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter"
         },
-        config = {
-            -- prompt for return type
-            prompt_func_return_type = {
-                go = true,
-                cpp = true,
-                c = true,
-                java = true,
-            },
-            -- prompt for function parameters
-            prompt_func_param_type = {
-                go = true,
-                cpp = true,
-                c = true,
-                java = true,
-            },
-        },
+        config = function()
+            require("refactoring").setup({
+                -- prompt for return type
+                prompt_func_return_type = {
+                    go = true,
+                    cpp = true,
+                    c = true,
+                    java = true,
+                },
+                -- prompt for function parameters
+                prompt_func_param_type = {
+                    go = true,
+                    cpp = true,
+                    c = true,
+                    java = true,
+                },
+            })
+
+            vim.keymap.set("v", "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]])
+            vim.keymap.set("v", "<leader>rf",
+                [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]])
+            vim.keymap.set("v", "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]])
+            vim.keymap.set("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
+            vim.keymap.set("n", "<leader>rb", [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]])
+            vim.keymap.set("n", "<leader>rbf", [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]])
+            vim.keymap.set("n", "<leader>ri", [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
+        end
     },
     {
         "nvim-telescope/telescope-dap.nvim",
@@ -205,41 +251,49 @@ plugins.qol = {
             require("telescope").load_extension("file_browser")
             require("telescope").load_extension("dap")
             require("telescope").load_extension("ui-select")
+
+            vim.keymap.set("n", "<leader>pf", "<cmd>lua require('telescope.builtin').find_files()<cr>")
+            vim.keymap.set("n", "<leader>pv", ":wincmd v <bar> lua require('telescope.builtin').find_files()<cr>")
+            vim.keymap.set("n", "<leader>ph", ":wincmd s <bar> lua require('telescope.builtin').find_files()<cr>")
+            vim.keymap.set("n", "<leader>pg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
         end,
     },
     {
         "nvim-tree/nvim-tree.lua",
         cmd = "NvimTreeToggle",
-        config = {
-            sort_by = "case_sensitive",
-            sync_root_with_cwd = true,
-            view = {
-                width = {
-                    min = 30,
-                    max = 30
-                }
-                -- mappings = {
-                --   list = {
-                --     { key = "u", action = "dir_up" },
-                --   },
-                -- },
-            },
-            renderer = {
-                group_empty = true,
-            },
-            filters = {
-                dotfiles = true,
-            },
-            tab = {
-                sync = {
-                    open = false,
-                    close = false,
-                    ignore = {},
+        config = function()
+            require("nvim-tree").setup({
+                sort_by = "case_sensitive",
+                sync_root_with_cwd = true,
+                view = {
+                    width = {
+                        min = 30,
+                        max = 30
+                    }
+                    -- mappings = {
+                    --   list = {
+                    --     { key = "u", action = "dir_up" },
+                    --   },
+                    -- },
                 },
-            },
-            update_focused_file = {
-                update_root = true
-            }
-        },
+                renderer = {
+                    group_empty = true,
+                },
+                filters = {
+                    dotfiles = true,
+                },
+                tab = {
+                    sync = {
+                        open = false,
+                        close = false,
+                        ignore = {},
+                    },
+                },
+                update_focused_file = {
+                    update_root = true
+                }
+            })
+            vim.keymap.set("n", "<leader>ft", "NvimTreeToggle")
+        end
     }
 }

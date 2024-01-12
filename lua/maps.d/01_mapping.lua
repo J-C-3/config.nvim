@@ -1,121 +1,55 @@
-local map = vim.keymap.set
-
 if vim.loop.os_uname().sysname == "Darwin" then
-    map("n", "gx", 'yiW:!open <C-R>"<CR><Esc>')
+    vim.keymap.set("n", "gx", 'yiW:!open <C-R>"<CR><Esc>')
 elseif vim.loop.os_uname().sysname == "Linux" then
-    map("n", "gx", 'yiW:!xdg-open <C-R>"<CR><Esc>')
+    vim.keymap.set("n", "gx", 'yiW:!xdg-open <C-R>"<CR><Esc>')
 end
 -- Fuck `q:` && `F1`
 -- https://www.reddit.com/r/neovim/comments/lizyxj/how_to_get_rid_of_q/
 -- won't work if you take too long to do perform the action, but that's fine
--- map("n", "q:", "<nop>", { noremap = true })
-map("n", "<F1>", "<nop>", { noremap = true })
+vim.keymap.set("n", "q:", "<nop>", { noremap = true })
+vim.keymap.set("n", "<F1>", "<nop>", { noremap = true })
 
 
 --Wordwrap
 -- Allows for navigating through wrapped lines without skipping over wrap
-map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Keep selection with visual indentation
-map('v', ">", "'>gv'", { expr = true })
-map('v', "<", "'<gv'", { expr = true })
-
--- Better incsearch
-map("n", "n", "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>")
-map("n", "N", "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>")
+vim.keymap.set('v', ">", "'>gv'", { expr = true })
+vim.keymap.set('v', "<", "'<gv'", { expr = true })
 
 -- focus tabpages
-map("n", "<leader><Tab>", ":tabnext<cr>", { desc = "Next Tab" })
-map("n", "<leader><S-Tab>", ":tabprevious<cr>", { desc = "Previous Tab" })
+vim.keymap.set("n", "<leader><Tab>", ":tabnext<cr>", { desc = "Next Tab" })
+vim.keymap.set("n", "<leader><S-Tab>", ":tabprevious<cr>", { desc = "Previous Tab" })
 
 -- focus buffers
-map("n", "<Tab>", function()
+vim.keymap.set("n", "<Tab>", function()
     Util.skipUnwantedBuffers("next")
 end)
-map("n", "<S-Tab>", function()
+vim.keymap.set("n", "<S-Tab>", function()
     Util.skipUnwantedBuffers("prev")
 end)
 
 
 -- Window/buffer stuff
-map("n", "<leader>ss", "<cmd>split<cr>", { desc = "Split horizontal" })
-map("n", "<leader>sv", "<cmd>vsplit<cr>", { desc = "Split Vertical" })
+vim.keymap.set("n", "<leader>ss", "<cmd>split<cr>", { desc = "Split horizontal" })
+vim.keymap.set("n", "<leader>sv", "<cmd>vsplit<cr>", { desc = "Split Vertical" })
 
 -- Split Terminal
-map("n", "<leader>stv", "<cmd>topleft vsplit term://" .. vim.o.shell .. "<CR>", { desc = "Vertical Term" })
-map("n", "<leader>sts", "<cmd>botright 15split term://" .. vim.o.shell .. "<CR>", { desc = "Horizontal Term" })
+vim.keymap.set("n", "<leader>stv", "<cmd>topleft vsplit term://" .. vim.o.shell .. "<CR>", { desc = "Vertical Term" })
+vim.keymap.set("n", "<leader>sts", "<cmd>botright 15split term://" .. vim.o.shell .. "<CR>", { desc = "Horizontal Term" })
 
 -- Term is set in terminal.lua
-map("t", "<C-p>", "<c-\\><c-n>")
-
--- Panel stuff
-map("n", "<leader>pt", ":lua require('panel').toggle()<cr>")
-map("n", "<leader>pn", ":lua require('panel').next()<cr>")
-map("n", "<leader>pp", ":lua require('panel').previous()<cr>")
-
--- Close window(split)
-map("n", "<c-q>", "<cmd>lua require('bufdelete').bufdelete(0, true)<CR>")
-
--- Delete currently focused buffer
-map("n", "<leader>bd", "<cmd>Bdelete<CR>", { silent = true })
+vim.keymap.set("t", "<C-p>", "<c-\\><c-n>")
 
 -- Window navigation
 -- Navigate between panes easily
-map("n", "<leader>h", ":wincmd h<cr>", { silent = true })
-map("n", "<leader>j", ":wincmd j<cr>", { silent = true })
-map("n", "<leader>k", ":wincmd k<cr>", { silent = true })
-map("n", "<leader>l", ":wincmd l<cr>", { silent = true })
+vim.keymap.set("n", "<leader>h", ":wincmd h<cr>", { silent = true })
+vim.keymap.set("n", "<leader>j", ":wincmd j<cr>", { silent = true })
+vim.keymap.set("n", "<leader>k", ":wincmd k<cr>", { silent = true })
+vim.keymap.set("n", "<leader>l", ":wincmd l<cr>", { silent = true })
 
 -- Float
-map("n", "<leader>fw", "<cmd> lua Util.Float()<cr>")
--- map("n", "<leader>fw", "<cmd> lua fn.Float(vim.defaulttable())<cr>")
-
--- Telescope
-map("n", "<leader>pf", "<cmd>lua require('telescope.builtin').find_files()<cr>")
-map("n", "<leader>pv", ":wincmd v <bar> lua require('telescope.builtin').find_files()<cr>")
-map("n", "<leader>ph", ":wincmd s <bar> lua require('telescope.builtin').find_files()<cr>")
-map("n", "<leader>pg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
-
--- Git
-map("n", "<leader>gs", ":Git | lua Util.Float()<cr>", { silent = true })
-map("n", "<leader>gw", ":Gwrite<cr>", { silent = true })
-map("n", "<leader>gc", ":Git commit | lua Util.Float()<cr>", { silent = true })
-map("n", "<leader>gsh", ":Git push<cr>", { silent = true })
-map("n", "<leader>gll", ":Git pull<cr>", { silent = true })
-map("n", "<leader>gb", ":Git blame<cr>", { silent = true })
-map("n", "<leader>gvd", ":Gvdiff<cr>", { silent = true })
-map("n", "<leader>gr", ":GRemove<cr>", { silent = true })
-map("n", "<leader>o", ":GBrowse<cr>", { silent = true })
-map("n", "<leader>gj", ":diffget //3<cr>", { silent = true })
-map("n", "<leader>gf", ":diffget //2<cr>", { silent = true })
-
-
--- Comment
-map({ 'n', 'x' },
-    '<leader>cmt',
-    '<cmd>set operatorfunc=v:lua.__flip_flop_comment<cr>g@',
-    {
-        silent = true,
-        desc = "toggle the comment state of each line individually"
-    }
-)
--- refactoring.nvim
-map("v", "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]])
-map("v", "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]])
-map("v", "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]])
-map("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
-
-map("n", "<leader>rb", [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]])
-map("n", "<leader>rbf", [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]])
-
-map("n", "<leader>ri", [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
-
--- Meta LSP stuff
-map("n", "<leader>Li", "<cmd>LspInstallInfo<CR>")
-map("n", "<leader>Lr", "<cmd>LspRestart<CR>")
-map("n", "<leader>Ls", "<cmd>LspStart<CR>")
-map("n", "<leader>LS", "<cmd>LspStop<CR>")
-
--- Filetree
-map("n", "<leader>ft", "NvimTreeToggle")
+vim.keymap.set("n", "<leader>fw", "<cmd> lua Util.Float()<cr>")
+-- vim.keymap.set("n", "<leader>fw", "<cmd> lua fn.Float(vim.defaulttable())<cr>")

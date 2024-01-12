@@ -90,6 +90,11 @@ plugins.lsp = {
                     filetypes = { "templ", "html", "htmx", "js", "go" }
                 })
             end
+
+            vim.keymap.set("n", "<leader>Li", "<cmd>LspInfo<CR>")
+            vim.keymap.set("n", "<leader>Lr", "<cmd>LspRestart<CR>")
+            vim.keymap.set("n", "<leader>Ls", "<cmd>LspStart<CR>")
+            vim.keymap.set("n", "<leader>LS", "<cmd>LspStop<CR>")
         end
     },
     {

@@ -56,14 +56,14 @@ plugins.ui = {
         config = function()
             require("bufferline").setup({
                 options = {
-                    mode = "buffers",                                                     -- set to "tabs" to only show tabpages instead
+                    mode = "buffers", -- set to "tabs" to only show tabpages instead
                     numbers = "none",
-                    close_command = "lua require('bufdelete').bufdelete(0, true)",        -- can be a string | function, see "Mouse actions"
-                    right_mouse_command = "",                                             -- can be a string | function, see "Mouse actions"
-                    left_mouse_command = "buffer %d",                                     -- can be a string | function, see "Mouse actions"
+                    close_command = "lua require('bufdelete').bufdelete(0, true)", -- can be a string | function, see "Mouse actions"
+                    right_mouse_command = "", -- can be a string | function, see "Mouse actions"
+                    left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
                     middle_mouse_command = "lua require('bufdelete').bufdelete(0, true)", -- can be a string | function, see "Mouse actions"
                     indicator = {
-                        icon = "▎",                                                     -- this should be omitted if indicator style is not 'icon'
+                        icon = "▎", -- this should be omitted if indicator style is not 'icon'
                         style = "icon",
                     },
                     buffer_close_icon = "",
