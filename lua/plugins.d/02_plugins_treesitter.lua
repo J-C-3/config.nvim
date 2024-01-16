@@ -7,7 +7,6 @@ plugins.treesitter = {
             "HiPhish/nvim-ts-rainbow2",
             "nvim-treesitter/nvim-treesitter-textobjects",
             "windwp/nvim-ts-autotag",
-            "JoosepAlviste/nvim-ts-context-commentstring",
         },
         config = function()
             local treesitter_parser_config = require "nvim-treesitter.parsers".get_parser_configs()
@@ -119,15 +118,6 @@ plugins.treesitter = {
                             ["[M"] = "@function.outer",
                             ["[]"] = "@class.outer",
                         },
-                    },
-                },
-                context_commentstring = {
-                    enable = true,
-                    commentary_integration = {
-                        -- change default mapping
-                        Commentary = false,
-                        -- disable default mapping
-                        CommentaryLine = false,
                     },
                 },
             })
