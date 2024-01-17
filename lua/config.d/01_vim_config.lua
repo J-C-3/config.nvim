@@ -58,3 +58,4 @@ vim.o.undofile = true
 
 vim.o.splitright = true
 vim.o.splitbelow = true
+vim.cmd([[colorscheme sorbet]])
